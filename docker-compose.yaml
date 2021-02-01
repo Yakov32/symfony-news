@@ -1,0 +1,52 @@
+version: '3.7'
+
+services:
+    nginx:
+        build:
+            context: ./docker/nginx
+        volumes:
+            - ./:/symfony
+        container_name: symfony-news-nginx
+        restart: always
+        ports:
+            - "8081:80"
+
+    php-fpm:
+        build:
+            context: ./docker/php-fpm
+        volumes:
+            - ./:/symfony
+        container_name: symfony-news-php-fpm
+        depends_on:
+            - mysql
+
+    php-cli:
+        build:
+            context: ./docker/php-cli
+        volumes:
+            - ./:/symfony
+        command: sleep 10000
+        container_name: symfony-news-php-cli
+
+    mysql:
+        image: mysql:8.0
+        command: --default-authentication-plugin=mysql_native_password
+        volumes:
+            - mysql:/var/lib/mysql
+        container_name: symfony-news-mysql
+        restart: always
+        environment:
+            - "MYSQL_ROOT_PASSWORD=ro"
+
+    phpmyadmin:
+        depends_on:
+            - mysql
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - '22222:80'
+        environment:
+            PMA_HOST: mysql
+            UPLOAD_LIMIT: 4953500000 kb
+
+volumes:
+    mysql:

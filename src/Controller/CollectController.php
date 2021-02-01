@@ -19,9 +19,21 @@ class CollectController
         $news = $collectorService->index();
 
         $parserService->parseAll($news);
-        $parsed_posts = $parserService->getParsedPosts();
+        $posts = $parserService->getParsedPosts();
 
+        $all_tags = [];
+
+        foreach($posts as $post){
+            $all_tags = array_merge($all_tags, $post['tags']);
+        }
+
+        $all_tags = array_unique($all_tags);
         //return new Response(print_r($news));
-        return new Response(print_r($parsed_posts));
+        return new Response(print_r($posts));
+    }
+
+
+    public function putDb(){
+
     }
 }

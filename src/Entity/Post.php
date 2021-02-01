@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
@@ -30,11 +32,11 @@ class Post
     private $text;
 
     /**
-     * Many Users have Many Groups.
+     * Many Posts have Many Tags.
      * @ManyToMany(targetEntity="Tag")
      * @JoinTable(name="posts_tags",
-     *      joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="group_id", referencedColumnName="id")}
+     *      joinColumns={@JoinColumn(name="post_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="tag_name", referencedColumnName="name")}
      *      )
      */
     private $tags;
@@ -43,6 +45,10 @@ class Post
      * @ORM\Column(type="datetime")
      */
     private $published_at;
+
+    public function __construct() {
+        $this->tags = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {

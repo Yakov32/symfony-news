@@ -7,13 +7,13 @@ namespace App\Service;
 class NewsParserService
 {
     private $parsed_posts = [];
+    private $parsed_tags = [];
 
-    public function parseAll($news){
-
-    foreach($news as $new){
-        $this->parseOne($new);
-    }
-
+    public function parseAll($news)
+    {
+        foreach($news as $new){
+            $this->parseOne($new);
+        }
     }
 
     private function parseOne($element){
@@ -40,4 +40,5 @@ class NewsParserService
     public function getParsedPosts(): array{
         return $this->parsed_posts;
     }
+
 }

@@ -27,6 +27,15 @@ class Post
     private $text;
 
     /**
+     * Many Posts have Many Tags.
+     * @ManyToMany(targetEntity="Tag")
+     * @JoinTable(name="posts_tags",
+     *      joinColumns={@JoinColumn(name="post_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="name_id", referencedColumnName="name")}
+     *      )
+     */
+    private $tags;
+    /**
      * @ORM\Column(type="datetime")
      */
     private $published_at;
@@ -34,6 +43,10 @@ class Post
     //public function __construct() {
     //    $this->tags = new ArrayCollection();
     //}
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -57,6 +70,11 @@ class Post
         $this->text = $text;
 
         return $this;
+    }
+
+    public function getTags()
+    {
+        return $this->tags;
     }
 
     public function getPublishedAt(): ?DateTimeInterface

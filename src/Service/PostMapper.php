@@ -43,12 +43,18 @@ class PostMapper
         $postEntity->setPublishedAt(new \DateTime($postDTO->published_at));
 
         foreach($postDTO->tags as $tag){
-            if(null !== $this->tagRepository->find($tag)){
+            $existedTag = $this->tagRepository->find($tag);
+
+            if(null !== $existedTag){
+                $postEntity->getTags()->add($existedTag);
                 continue;
             }
             $tagEntity = new Tag();
             $tagEntity->setName($tag);
+
+            $postEntity->getTags()->add($tagEntity);
             $this->entityManager->persist($tagEntity);
+
         }
 
         return $postEntity;

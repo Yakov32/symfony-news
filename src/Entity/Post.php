@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
@@ -16,53 +17,32 @@ class Post
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="bigint")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $title;
-
-    /**
-     * @ORM\Column(type="string", length=1000)
+     * @ORM\Column(type="text")
      */
     private $text;
-
-    /**
-     * Many Posts have Many Tags.
-     * @ManyToMany(targetEntity="Tag")
-     * @JoinTable(name="posts_tags",
-     *      joinColumns={@JoinColumn(name="post_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="tag_name", referencedColumnName="name")}
-     *      )
-     */
-    private $tags;
 
     /**
      * @ORM\Column(type="datetime")
      */
     private $published_at;
 
-    public function __construct() {
-        $this->tags = new ArrayCollection();
-    }
+    //public function __construct() {
+    //    $this->tags = new ArrayCollection();
+    //}
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function setId(int $id): self
     {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
+        $this->id = $id;
 
         return $this;
     }
@@ -79,15 +59,20 @@ class Post
         return $this;
     }
 
-    public function getPublishedAt(): ?\DateTimeInterface
+    public function getPublishedAt(): ?DateTimeInterface
     {
         return $this->published_at;
     }
 
-    public function setPublishedAt(\DateTimeInterface $published_at): self
+    public function setPublishedAt(DateTimeInterface $published_at): self
     {
         $this->published_at = $published_at;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->id;
     }
 }

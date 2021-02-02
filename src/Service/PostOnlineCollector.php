@@ -5,11 +5,10 @@ namespace App\Service;
 
 
 use Abraham\TwitterOAuth\TwitterOAuth;
-use Symfony\Component\HttpFoundation\Response;
 
-class NewsCollectorService
+class PostOnlineCollector
 {
-    public function index(): array
+    public function collectPosts()
     {
         $twitter_app_consumer_key = 'taTWgJe9JVBU9XXFu7zAK1JFX';
         $twitter_app_consumer_secret = 'EeyNv6jb36q0SWUNRpeJLFMS3pOqqzs24ZvuGki1foijgoG49W';

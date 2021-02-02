@@ -37,8 +37,7 @@ class PostMapper
 
     public function mapSinglePost(PostDTO $postDTO): ?Post
     {
-        $postEntity = new Post();
-        $postEntity->setId($postDTO->id);
+        $postEntity = new Post($postDTO->id);
         $postEntity->setText($postDTO->text);
         $postEntity->setPublishedAt(new \DateTime($postDTO->published_at));
 

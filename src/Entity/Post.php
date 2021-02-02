@@ -17,6 +17,7 @@ class Post
 {
     /**
      * @ORM\Id
+     * @ORM\GeneratedValue("NONE")
      * @ORM\Column(type="bigint")
      */
     private $id;
@@ -35,29 +36,21 @@ class Post
      *      )
      */
     private $tags;
+
     /**
      * @ORM\Column(type="datetime")
      */
-    private $published_at;
+    private $publishedAt;
 
-    //public function __construct() {
-    //    $this->tags = new ArrayCollection();
-    //}
-    public function __construct()
+    public function __construct(int $id)
     {
+        $this->id = $id;
         $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     public function getText(): ?string
@@ -77,20 +70,15 @@ class Post
         return $this->tags;
     }
 
-    public function getPublishedAt(): ?DateTimeInterface
+    public function getPublishedAt(): ?\DateTimeInterface
     {
-        return $this->published_at;
+        return $this->publishedAt;
     }
 
-    public function setPublishedAt(DateTimeInterface $published_at): self
+    public function setPublishedAt(\DateTimeInterface $publishedAt): self
     {
-        $this->published_at = $published_at;
+        $this->publishedAt = $publishedAt;
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->id;
     }
 }

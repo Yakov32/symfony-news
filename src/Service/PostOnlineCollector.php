@@ -8,6 +8,7 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 
 class PostOnlineCollector
 {
+
     public function collectPosts()
     {
         $twitter_app_consumer_key = 'taTWgJe9JVBU9XXFu7zAK1JFX';

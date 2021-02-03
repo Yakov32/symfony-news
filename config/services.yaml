@@ -29,3 +29,19 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    #You need to set twitter api keys in env.local file
+    App\Service\PostOnlineCollector:
+        arguments:
+            $twitterApiKeys:
+                twitterConsumerKey: '%env(TWITTER_CONSUMER_KEY)%'
+                twitterConsumerSecret: '%env(TWITTER_CONSUMER_SECRET)%'
+                twitterAccessToken: '%env(TWITTER_ACCESS_TOKEN)%'
+                twitterAccessTokenSecret: '%env(TWITTER_ACCESS_TOKEN_SECRET)%'
+
+            $connectionParams:
+                path: 'statuses/user_timeline'
+                params:
+                    count: 25
+                    exclude_replies: false
+                    screen_name: 'thenewshooked'

@@ -8,21 +8,27 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 
 class PostOnlineCollector
 {
+    private $twitterApiKeys;
+    private $connectionParams;
 
+    public function __construct(array $twitterApiKeys, array $connectionParams)
+    {
+        //Vars autowired from services.yaml and .env.local files
+        $this->twitterApiKeys = $twitterApiKeys;
+        $this->connectionParams = $connectionParams;
+    }
     public function collectPosts()
     {
-        $twitter_app_consumer_key = 'taTWgJe9JVBU9XXFu7zAK1JFX';
-        $twitter_app_consumer_secret = 'EeyNv6jb36q0SWUNRpeJLFMS3pOqqzs24ZvuGki1foijgoG49W';
-        $twitter_app_access_token = '97639832-Z5o8XZi8dcUTpeUBfpcndD7MOnxT7iwkI7QeHJlDm';
-        $twitter_app_access_token_secret = 'GzFlBECCLKx8xSK4kkfZguYFHGvSsZEPWIBTn1kEcgIXr';
-
         $connection = new TwitterOAuth(
-            $twitter_app_consumer_key,
-            $twitter_app_consumer_secret,
-            $twitter_app_access_token,
-            $twitter_app_access_token_secret);
+            $this->twitterApiKeys['twitterConsumerKey'],
+            $this->twitterApiKeys['twitterConsumerSecret'],
+            $this->twitterApiKeys['twitterAccessToken'],
+            $this->twitterApiKeys['twitterAccessTokenSecret']
+        );
 
-        $statuses = $connection->get("statuses/user_timeline", array('count' => 20, 'exclude_replies' => false, 'screen_name' => 'thenewshooked'));
+        $statuses = $connection->get(
+            $this->connectionParams['path'],
+            $this->connectionParams['params']);
 
         return $statuses;
     }

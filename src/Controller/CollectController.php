@@ -36,6 +36,6 @@ class CollectController
 
         $this->postMapper->mapData($posts);
 
-        return new Response(print_r($posts));
+        return new Response(print_r($collected_posts));
     }
 }

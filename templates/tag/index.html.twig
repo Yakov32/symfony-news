@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    <header class="mb-3">
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand m-3">Новости по тэгу: #{{ tag }}</a>
+                <a class="navbar-brand link" href="/">Вернуться на главную</a>
+            </div>
+        </nav>
+    </header>
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <nav class="navbar navbar-light">
+        <div class="">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
+                <button class="btn btn-outline-success" type="submit">Поиск</button>
+            </form>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col-8">
+            <h2 class="text-info">Новости</h2>
+
+            {% for post in posts %}
+                <div class="card mb-3 bg-light">
+                    <div class="card-body">
+                        <p class="card-text">{{ post.text }}</p>
+                        <p class="card-text"><small class="text-muted">{{ post.publishedAt|date }}</small></p>
+                    </div>
+                </div>
+            {% endfor %}
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}

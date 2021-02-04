@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\Tools\Pagination\Paginator;
+
 
 /**
  * @method Post|null find($id, $lockMode = null, $lockVersion = null)
@@ -24,9 +24,23 @@ class PostRepository extends ServiceEntityRepository
     //  * @return Post[] Returns an array of Post objects
     //  */
 
-    public function findAllOrderedBy()
+    public function findAllOrderedBy($paginator, int $page = 1)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->orderBy('p.publishedAt', 'DESC')
+            ->getQuery();
+
+        $pagination = $paginator->paginate($query,$page, 5);
+
+        return $pagination;
+    }
+
+    public function findByTag($tag)
     {
         return $this->createQueryBuilder('p')
+            ->join('p.tags', 't')
+            ->where("t.name = :tag")
+            ->setParameter('tag', $tag)
             ->orderBy('p.publishedAt', 'DESC')
             ->getQuery()
             ->execute();

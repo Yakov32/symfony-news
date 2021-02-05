@@ -34,11 +34,13 @@ class IndexController
 
         $postRepository = $this->entityManager->getRepository(Post::class);
         $tagRepository = $this->entityManager->getRepository(Tag::class);
-        $tags = $tagRepository->findAllLimit();
 
+        $popularTags = $tagRepository->findMostPopular();
         $pagination = $postRepository->findAllOrderedBy($page);
 
-        $htmlContent = $this->twig->render('index/index.html.twig', compact('pagination', 'tags'));
+        $htmlContent = $this->twig->render(
+            'index/index.html.twig',
+            compact('pagination', 'popularTags'));
 
         return new Response($this->htmlParser->tagsToLinks($htmlContent));
     }

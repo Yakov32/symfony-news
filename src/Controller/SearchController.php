@@ -15,7 +15,10 @@ use Twig\Environment;
 class SearchController
 {
     private $entityManager;
+    private $twig;
+    private $htmlParser;
 
+    //Не наследую абстракт контроллер специально, так удобнее работать.
     public function __construct(EntityManagerInterface $entityManager, Environment $twig, HtmlParser $htmlParser)
     {
         $this->entityManager = $entityManager;
@@ -29,18 +32,17 @@ class SearchController
     public function find(Request $request)
     {
         $query = $request->query->get('q');
-
-
         $page = $request->query->get('page', 1);
+
         $postRepository = $this->entityManager->getRepository(Post::class);
         $tagRepository = $this->entityManager->getRepository(Tag::class);
 
-        $tags = $tagRepository->findAllLimit();
-
+        $popularTags = $tagRepository->findMostPopular();
         $pagination = $postRepository->findByText($query, $page);
+
         $htmlContent = $this->twig->render(
             'search/index.html.twig',
-            compact('pagination', 'query', 'tags'));
+            compact('pagination', 'query', 'popularTags'));
 
         $htmlContent = $this->htmlParser->tagsToLinks($htmlContent);
         $htmlContent = $this->htmlParser->addColor($htmlContent, $query);

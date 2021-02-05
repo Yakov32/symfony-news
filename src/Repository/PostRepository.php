@@ -40,15 +40,19 @@ class PostRepository extends ServiceEntityRepository
         return $pagination;
     }
 
-    public function findByTag($tag)
+    public function findByTag($tag, int $page = 1)
     {
-        return $this->createQueryBuilder('p')
+        $query = $this->createQueryBuilder('p')
             ->join('p.tags', 't')
             ->where("t.name = :tag")
             ->setParameter('tag', $tag)
             ->orderBy('p.publishedAt', 'DESC')
-            ->getQuery()
-            ->execute();
+            ->getQuery();
+
+        $pagination = $this->paginator->paginate($query,$page, 5);
+
+        return $pagination;
+
     }
 
     public function findByText($text, $page = 1, $limit = 5)

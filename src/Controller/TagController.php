@@ -4,7 +4,9 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\Tag;
 use App\Service\HtmlParser;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,13 +28,19 @@ class TagController
     /**
      * @Route ("/{tag}")
      */
-    public function indexAction(string $tag):Response
+    public function indexAction(string $tag, Request $request):Response
     {
+        $page = $request->query->get('page', 1);
+
         $postRepository = $this->entityManager->getRepository(Post::class);
+        $tagRepository = $this->entityManager->getRepository(Tag::class);
 
-        $posts = $postRepository->findByTag($tag);
+        $posts = $postRepository->findByTag($tag, $page);
+        $popularTags = $tagRepository->findMostPopular();
 
-        $htmlContent = $this->twig->render('tag/index.html.twig', compact('tag', 'posts'));
+        $htmlContent = $this->twig->render(
+            'tag/index.html.twig',
+            compact('tag', 'posts', 'popularTags'));
 
         return new Response($this->htmlParser->tagsToLinks($htmlContent));
     }

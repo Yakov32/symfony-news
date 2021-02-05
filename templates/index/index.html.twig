@@ -6,7 +6,7 @@
         <nav class="navbar navbar-light">
             <div class="">
                 <form class="d-flex" method="GET" action="search/">
-                    <input class="form-control me-2" name="q" type="search" placeholder="Поиск" aria-label="Поиск">
+                    <input class="form-control me-2" name="q" type="search" placeholder="Поиск" aria-label="Поиск" required>
                     <button class="btn btn-outline-success" type="submit">Поиск</button>
                 </form>
             </div>
@@ -35,8 +35,8 @@
             <div class="col-4">
                 <div class="tags ms-5 ">
                     <h2>Тэги</h2>
-                    {% for tag in tags %}
-                        <p>#{{ tag.name }}</p>
+                    {% for tag in popularTags %}
+                        <p>#{{ tag.tag }}</p>
                     {% endfor %}
                 </div>
             </div>

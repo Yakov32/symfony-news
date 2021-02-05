@@ -26,4 +26,21 @@ class TagRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
     }
+
+    public function findMostPopular()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+        select count(1) as c, name_id as tag from 
+        (SELECT pt.post_id, pt.name_id FROM posts_tags pt join post p on pt.post_id = p.id and p.published_at >= '2021-02-01 00:00:00') sub
+        GROUP BY tag
+        ORDER BY c DESC
+        LIMIT 17";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAllAssociative();
+    }
 }

@@ -5,8 +5,8 @@
     <div class="container-fluid">
         <nav class="navbar navbar-light">
             <div class="">
-                <form class="d-flex" method="GET" action="search/">
-                    <input class="form-control me-2" name="q" type="search" placeholder="Поиск" aria-label="Поиск">
+                <form class="d-flex" method="GET" action="/search/">
+                    <input class="form-control me-2" name="q" type="search" placeholder="Поиск" aria-label="Поиск" value={{ query }}>
                     <button class="btn btn-outline-success" type="submit">Поиск</button>
                 </form>
             </div>
@@ -36,7 +36,8 @@
                 <div class="tags ms-5 ">
                     <h2>Тэги</h2>
                     {% for tag in tags %}
-                        <p>#{{ tag.name }}</p>
+                    <p>#{{ tag.name }}</p>
+
                     {% endfor %}
                 </div>
             </div>

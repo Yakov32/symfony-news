@@ -1,22 +1,20 @@
 <?php
 
+
 namespace App\Controller;
 
 use App\Entity\Tag;
 use App\Service\HtmlParser;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Post;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
-use App\Entity\Post;
 
-
-class IndexController
+class SearchController
 {
     private $entityManager;
-    private $twig;
-    private $htmlParser;
 
     public function __construct(EntityManagerInterface $entityManager, Environment $twig, HtmlParser $htmlParser)
     {
@@ -26,20 +24,27 @@ class IndexController
     }
 
     /**
-     * @Route ("/")
+     * @Route ("/search")
      */
-    public function index(Request $request): Response
+    public function find(Request $request)
     {
-        $page = $request->query->get('page', 1);
+        $query = $request->query->get('q');
 
+
+        $page = $request->query->get('page', 1);
         $postRepository = $this->entityManager->getRepository(Post::class);
         $tagRepository = $this->entityManager->getRepository(Tag::class);
+
         $tags = $tagRepository->findAllLimit();
 
-        $pagination = $postRepository->findAllOrderedBy($page);
+        $pagination = $postRepository->findByText($query, $page);
+        $htmlContent = $this->twig->render(
+            'search/index.html.twig',
+            compact('pagination', 'query', 'tags'));
 
-        $htmlContent = $this->twig->render('index/index.html.twig', compact('pagination', 'tags'));
+        $htmlContent = $this->htmlParser->tagsToLinks($htmlContent);
+        $htmlContent = $this->htmlParser->addColor($htmlContent, $query);
 
-        return new Response($this->htmlParser->tagsToLinks($htmlContent));
+        return new Response($htmlContent);
     }
 }

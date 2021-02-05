@@ -42,6 +42,6 @@ services:
             $connectionParams:
                 path: 'statuses/user_timeline'
                 params:
-                    count: 25
+                    count: 30
                     exclude_replies: false
                     screen_name: 'thenewshooked'

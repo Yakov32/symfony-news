@@ -1,1 +1,1 @@
-php bin/console app:collect-news
+php bin/console app:collect-posts

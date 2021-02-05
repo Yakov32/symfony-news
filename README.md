@@ -14,24 +14,20 @@ composer install
 
 ## Usage
 
-```python
-  
 1. Create .env.local and override vars from .env with your own TWITTER API data.
 
-2. docker-compose up -d 
+2. Execute these commands.
+```python
+  
+sudo docker-compose up -d 
 
-3. sudo docker exec -it bash symfony-news-php-cli
+sudo docker exec -it bash symfony-news-php-cli
 
-4. php bin/console dodctrine:database:create & php/bin/console doctrine:migrations:migrate
+php bin/console dodctrine:database:create
 
-5. Collect posts from twitter buy collect-news.
+php/bin/console doctrine:migrations:migrate
 
-
-
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
 ```
-
+5. Collect posts from twitter by collect-news.
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

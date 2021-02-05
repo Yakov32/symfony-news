@@ -14,11 +14,12 @@ composer install
 
 ## Usage
 
-1. Create .env.local and override vars from .env with your own TWITTER API data.
+1. Create .env.local and override vars from .env with your own TWITTER API data. Also you can configurate collector params in services.yaml
+
 
 2. Execute these commands.
+
 ```python
-  
 sudo docker-compose up -d 
 
 sudo docker exec -it bash symfony-news-php-cli
@@ -26,8 +27,7 @@ sudo docker exec -it bash symfony-news-php-cli
 php bin/console dodctrine:database:create
 
 php/bin/console doctrine:migrations:migrate
-
 ```
-5. Collect posts from twitter by collect-news.
+3. Collect posts from twitter by ```php bin/console app:collect-posts```
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

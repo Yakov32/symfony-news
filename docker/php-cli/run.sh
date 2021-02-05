@@ -1,0 +1,1 @@
+php bin/console app:collect-news

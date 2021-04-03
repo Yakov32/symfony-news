@@ -22,11 +22,11 @@ composer install
 ```python
 sudo docker-compose up -d 
 
-sudo docker exec -it bash symfony-news-php-cli
+sudo docker exec -it symfony-news-php-cli bash
 
-php bin/console dodctrine:database:create
+php bin/console doctrine:database:create
 
-php/bin/console doctrine:migrations:migrate
+php bin/console doctrine:migrations:migrate
 ```
 3. Collect posts from twitter by ```php bin/console app:collect-posts```
 ## License

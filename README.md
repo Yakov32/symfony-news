@@ -24,7 +24,7 @@ sudo docker-compose up -d
 
 sudo docker exec -it symfony-news-php-cli bash
 
-php bin/console dodctrine:database:create
+php bin/console doctrine:database:create
 
 php/bin/console doctrine:migrations:migrate
 ```

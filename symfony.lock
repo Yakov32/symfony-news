@@ -525,5 +525,8 @@
     },
     "webmozart/assert": {
         "version": "1.9.1"
+    },
+    "yasha32/messager-bundle": {
+        "version": "dev-master"
     }
 }

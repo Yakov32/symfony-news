@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b52fe466005d85fac20c69603efa9b7",
+    "content-hash": "2044f757f124b47ade113826687a691a",
     "packages": [
         {
             "name": "abraham/twitteroauth",
@@ -7762,6 +7762,44 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.9.1"
             },
             "time": "2020-07-08T17:02:28+00:00"
+        },
+        {
+            "name": "yasha32/messager-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Yakov32/MessagerBundle.git",
+                "reference": "777e46a82d58c4bb2b321754667f27c74b3a6621"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Yakov32/MessagerBundle/zipball/777e46a82d58c4bb2b321754667f27c74b3a6621",
+                "reference": "777e46a82d58c4bb2b321754667f27c74b3a6621",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^5.2"
+            },
+            "default-branch": true,
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Yasha32\\MessagerBundle\\": "/src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "test",
+            "support": {
+                "issues": "https://github.com/Yakov32/MessagerBundle/issues",
+                "source": "https://github.com/Yakov32/MessagerBundle/tree/master"
+            },
+            "time": "2021-04-04T20:19:40+00:00"
         }
     ],
     "packages-dev": [
@@ -8361,11 +8399,13 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "yasha32/messager-bundle": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.2.5",
+        "php": ">=7.3",
         "ext-ctype": "*",
         "ext-iconv": "*"
     },

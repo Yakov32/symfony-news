@@ -8,6 +8,7 @@ use App\Entity\Tag;
 use App\Repository\PostRepository;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Null_;
 
 class PostMapper
 {
@@ -33,6 +34,8 @@ class PostMapper
             $this->entityManager->flush();
             $this->entityManager->clear();
         }
+
+        return true;
     }
 
     public function mapSinglePost(PostDTO $postDTO): ?Post
@@ -41,19 +44,22 @@ class PostMapper
         $postEntity->setText($postDTO->text);
         $postEntity->setPublishedAt(new \DateTime($postDTO->published_at));
 
-        foreach($postDTO->tags as $tag){
+        if ($postDTO->tags === Null) {
+            return $postEntity;
+        }
+        foreach ($postDTO->tags as $tag) {
             $existedTag = $this->tagRepository->find($tag);
 
-            if(null !== $existedTag){
+            if (null !== $existedTag) {
                 $postEntity->getTags()->add($existedTag);
                 continue;
             }
+
             $tagEntity = new Tag();
             $tagEntity->setName($tag);
 
             $postEntity->getTags()->add($tagEntity);
             $this->entityManager->persist($tagEntity);
-
         }
 
         return $postEntity;
@@ -63,7 +69,7 @@ class PostMapper
     public function verifyExist($postDTO): bool{
         $res = $this->postRepository->find($postDTO->id);
 
-        if (null == $res){
+        if (null == $res) {
             return false;
         }
         return true;

@@ -26,7 +26,7 @@ class PostParser
         $postDTO->text = $not_parsed_post->text;
         $postDTO->published_at = $not_parsed_post->created_at;
 
-        if (property_exists($not_parsed_post, 'entities')){
+        if (property_exists($not_parsed_post, 'entities')) {
             $postDTO->tags = $this->parseTags($not_parsed_post->entities->hashtags);
         }
         return $postDTO;
@@ -36,7 +36,7 @@ class PostParser
     {
         $parsed_tags = [];
 
-        foreach($tags as $tag){
+        foreach ($tags as $tag) {
             $parsed_tags[] = $tag->text;
         }
 

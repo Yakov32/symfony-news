@@ -3,10 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Tag;
+use App\Repository\PostRepository;
 use App\Service\HtmlParser;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 use App\Entity\Post;
@@ -19,7 +23,7 @@ class IndexController
     private $twig;
     private $htmlParser;
 
-    public function __construct(EntityManagerInterface $entityManager, Environment $twig, HtmlParser $htmlParser)
+    public function __construct(EntityManagerInterface $entityManager, Environment $twig, HtmlParser $htmlParser, LoggerInterface $logger)
     {
         $this->entityManager = $entityManager;
         $this->twig = $twig;
@@ -44,13 +48,5 @@ class IndexController
             compact('pagination', 'popularTags'));
 
         return new Response($this->htmlParser->tagsToLinks($htmlContent));
-    }
-
-    /**
-     * @Route ("/text/{text}")
-     */
-    public function someHui(MessageService $messageService,$text)
-    {
-        print_r($messageService->index($text));die;
     }
 }

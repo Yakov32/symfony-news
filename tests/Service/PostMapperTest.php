@@ -11,6 +11,7 @@ use App\Repository\TagRepository;
 use App\Service\PostMapper;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Util\Annotation;
 
 class PostMapperTest extends TestCase
 {
@@ -21,25 +22,31 @@ class PostMapperTest extends TestCase
             $this->createMock(TagRepository::class));
     }
 
-    public function testMapDataSuccess()
+    /**
+     * @dataProvider postsProvider
+     */
+    public function testMapDataSuccess($postDTO, $post1DTO)
     {
         $postMapper = $this->createPostMapper();
 
-        $res = $postMapper->mapData($this->getPostArrayMock());
+        $res = $postMapper->mapData([$postDTO, $post1DTO]);
 
         $this->assertTrue($res);
     }
 
-    public function testMapSingePostSuccess()
+    /**
+     * @dataProvider postsProvider
+     */
+    public function testMapSingePostSuccess(PostDTO $postDTO)
     {
         $postMapper = $this->createPostMapper();
-        $post = $postMapper->mapSinglePost($this->getPostArrayMock()[0]);
+        $post = $postMapper->mapSinglePost($postDTO);
 
         $this->assertIsObject($post);
         $this->assertSame(Post::class, get_class($post));
     }
 
-    private function getPostArrayMock()
+    public function postsProvider(): array
     {
         $post = new PostDTO();
         $post->id = 2;
@@ -51,6 +58,6 @@ class PostMapperTest extends TestCase
         $post1->text = 'Some test text';
         $post1->published_at = date("D M j G:i:s T Y");
 
-        return [$post, $post1];
+        return [[$post, $post1]];
     }
 }

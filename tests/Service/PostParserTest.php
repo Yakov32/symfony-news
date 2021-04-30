@@ -10,38 +10,40 @@ use PHPUnit\Framework\TestCase;
 
 class PostParserTest extends TestCase
 {
-    public function setUp(): void
+    /**
+     * @dataProvider notParsedPostsProvider
+     */
+    public function testParseAllPostsSuccess($notParsedPost, $notParsedPost1)
     {
-        $this->postParser = new PostParser();
-        $this->notParsedPosts = $this->getNotParsedPostsMock();
-    }
+        $postParser = new PostParser();
+        $posts = $postParser->parsePosts([$notParsedPost, $notParsedPost1]);
 
-    public function testParseAllPostsSuccess()
-    {
-        $posts = $this->postParser->parsePosts($this->notParsedPosts);
-
-        $this->assertIsArray($posts);
         $this->assertNotEmpty($posts);
+        $this->assertIsArray($posts);
 
-        $post1 = $posts[0];
+        $post = $posts[0];
 
-        $this->assertIsObject($post1);
-        $this->assertEquals(PostDTO::class, get_class($post1));
+        $this->assertIsObject($post);
+        $this->assertEquals(PostDTO::class, get_class($post));
     }
 
-    public function testParseOnePostSuccess()
+    /**
+     * @dataProvider notParsedPostsProvider
+     */
+    public function testParseOnePostSuccess($notParsedPost)
     {
-        $post = $this->postParser->parseOne($this->notParsedPosts[0]);
+        $postParser = new PostParser();
+        $post = $postParser->parseOne($notParsedPost);
 
         $this->assertNotEmpty($post);
         $this->assertIsObject($post);
         $this->assertEquals(PostDTO::class, get_class($post));
     }
 
-    public function getNotParsedPostsMock()
+    public function notParsedPostsProvider()
     {
-        return [
-            0 => new class(){
+        $notParsedPosts = [
+            new class(){
                 public function __construct()
                 {
                     $this->id = 25;
@@ -49,7 +51,7 @@ class PostParserTest extends TestCase
                     $this->created_at = new \DateTime();
                 }
             },
-            1 => new class(){
+            new class(){
                 public function __construct()
                 {
                     $this->id = 48;
@@ -58,5 +60,6 @@ class PostParserTest extends TestCase
                 }
             }
         ];
+        return [$notParsedPosts];
     }
 }

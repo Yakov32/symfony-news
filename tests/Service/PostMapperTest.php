@@ -11,17 +11,9 @@ use App\Repository\TagRepository;
 use App\Service\PostMapper;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Util\Annotation;
 
 class PostMapperTest extends TestCase
 {
-    public function createPostMapper(){
-       return new PostMapper(
-            $this->createMock(EntityManager::class),
-            $this->createMock(PostRepository::class),
-            $this->createMock(TagRepository::class));
-    }
-
     /**
      * @dataProvider postsProvider
      */
@@ -44,6 +36,13 @@ class PostMapperTest extends TestCase
 
         $this->assertIsObject($post);
         $this->assertSame(Post::class, get_class($post));
+    }
+
+    public function createPostMapper(){
+        return new PostMapper(
+            $this->createMock(EntityManager::class),
+            $this->createMock(PostRepository::class),
+            $this->createMock(TagRepository::class));
     }
 
     public function postsProvider(): array

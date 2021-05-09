@@ -9,7 +9,7 @@ class PostParser
 {
     private $parsed_posts;
 
-    public function parsePosts($not_parsed_posts)
+    public function parsePosts(array $not_parsed_posts)
     {
         foreach($not_parsed_posts as $not_parsed_post){
            $post = $this->parseOne($not_parsed_post);
@@ -32,7 +32,7 @@ class PostParser
         return $postDTO;
     }
 
-    private function parseTags($tags): array
+    private function parseTags(array $tags): array
     {
         $parsed_tags = [];
 

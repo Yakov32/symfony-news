@@ -1,6 +1,6 @@
 # Description
 
-Symfony-news it's test application on Symfony framework.
+Symfony-news it's a test application on Symfony framework
 
 ## Installation
 
